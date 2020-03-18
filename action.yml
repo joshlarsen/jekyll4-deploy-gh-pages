@@ -1,0 +1,8 @@
+name: jekyll4-deploy-gh-pages
+description: 'Builds & deploys a Jekyll 4.x site to gh-pages branch of the same repository.'
+branding: 
+  icon: 'upload-cloud'
+  color: 'blue'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
