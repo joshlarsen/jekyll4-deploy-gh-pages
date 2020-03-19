@@ -12,7 +12,7 @@ bundle
 
 echo "Building Jekyll site..."
 
-jekyll build
+JEKYLL_ENV=production jekyll build
 
 echo "Publishing..."
 
