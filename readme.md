@@ -63,7 +63,7 @@ jobs:
 
 ### Faster Builds with Bundler Caching
 
-You can use the `caching` branch of the GitHub Action to enable Bundler caching and speed up the build/deploy considerably. Note the last build step in `mail.yml` specifies the `caching` branch, not the `master` branch.
+You can use the `caching` branch of the GitHub Action to enable Bundler caching and speed up the build/deploy considerably. Note the last build step in `main.yml` specifies the `caching` branch, not the `master` branch.
 
 ```yaml
 name: Jekyll Deploy
