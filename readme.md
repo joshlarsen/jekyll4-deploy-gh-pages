@@ -33,6 +33,8 @@ jobs:
           GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
 ```
 
+
+
 ### Custom Build Directory
 
 If you use a directory other than `_site` as the Jekyll build destination, set it with the `JEKYLL_DESTINATION` variable.
@@ -57,9 +59,52 @@ jobs:
           JEKYLL_DESTINATION: docs
 ```
 
+
+
+### Faster Builds with Bundler Caching
+
+You can use the `caching` branch of the GitHub Action to enable Bundler caching and speed up the build/deploy considerably. Note the last build step in `mail.yml` specifies the `caching` branch, not the `master` branch.
+
+```yaml
+name: Jekyll Deploy
+
+on: [push]
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: GitHub Checkout
+        uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Build & Deploy to GitHub Pages
+        uses: joshlarsen/jekyll4-deploy-gh-pages@caching
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
+          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+```
+
+
+
+Enabling caching on a mostly vanilla Jekyll site reduces deploy time from 3-4 minutes down to less than 1 minute. The cached build step is reduced from ~3 minutes to ~12 seconds.
+
+![build without cache](img/build-no-cache.png)
+
+![build with cache](img/build-with-cache.png)
+
+
+
 ### Security
 
-If you don't trust running third party actions in your repo, you can always clone this one and substitute `joshlarsen/jekyll4-deploy-gh-pages@master` with your repo name in your workflow `.yml`.
+If you don't trust running third party actions in your repo, you can always clone this one and substitute `joshlarsen/jekyll4-deploy-gh-pages@master` or `joshlarsen/jekyll4-deploy-gh-pages@caching` with your repo name/branch in your workflow `.yml`.
+
+
 
 ### Details
 
