@@ -87,7 +87,7 @@ Bundler caching on a mostly vanilla Jekyll site reduces deploy time from 3-4 min
 
 ### Security
 
-If you don't trust running third party actions in your repo, you can always clone this one and substitute `joshlarsen/jekyll4-deploy-gh-pages@master` or `joshlarsen/jekyll4-deploy-gh-pages@caching` with your repo name/branch in your workflow `.yml`.
+If you don't trust running third party actions in your repo, you can always clone this one and substitute `joshlarsen/jekyll4-deploy-gh-pages@master` with your repo name/branch in your workflow `.yml`.
 
 
 
