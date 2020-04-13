@@ -8,7 +8,7 @@ GitHub Pages supports Jekyll out of the box, but very few plugins are supported.
 
 ### Prior Work
 
-Thanks to [Bryan Schuetz](https://github.com/BryanSchuetz) for a [working example](https://github.com/BryanSchuetz/jekyll-deploy-gh-pages). This version cleans up a few things, works with Bundler 2.x and Jekyll 4.x, and supports a custom Jekyll build/destination directory.
+Thanks to [Bryan Schuetz](https://github.com/BryanSchuetz) for a [working example](https://github.com/BryanSchuetz/jekyll-deploy-gh-pages). This version cleans up a few things, works with Bundler 2.x and Jekyll 4.x, and supports a custom Jekyll build/destination directory as well as caching to improve build times.
 
 ### Setup
 
@@ -25,6 +25,13 @@ jobs:
     steps:
       - name: GitHub Checkout
         uses: actions/checkout@v1
+      - name: Bundler Cache
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
       - name: Build & Deploy to GitHub Pages
         uses: joshlarsen/jekyll4-deploy-gh-pages@master
         env:
@@ -50,6 +57,13 @@ jobs:
     steps:
       - name: GitHub Checkout
         uses: actions/checkout@v1
+      - name: Bundler Cache
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
       - name: Build & Deploy to GitHub Pages
         uses: joshlarsen/jekyll4-deploy-gh-pages@master
         env:
@@ -61,39 +75,9 @@ jobs:
 
 
 
-### Faster Builds with Bundler Caching
+### Caching
 
-You can use the `caching` branch of the GitHub Action to enable Bundler caching and speed up the build/deploy considerably. Note the last build step in `main.yml` specifies the `caching` branch, not the `master` branch.
-
-```yaml
-name: Jekyll Deploy
-
-on: [push]
-
-jobs:
-  build_and_deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: GitHub Checkout
-        uses: actions/checkout@v1
-      - name: Bundler Cache
-        uses: actions/cache@v1
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-      - name: Build & Deploy to GitHub Pages
-        uses: joshlarsen/jekyll4-deploy-gh-pages@caching
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
-          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
-```
-
-
-
-Enabling caching on a mostly vanilla Jekyll site reduces deploy time from 3-4 minutes down to less than 1 minute. The cached build step is reduced from ~3 minutes to ~12 seconds.
+Bundler caching on a mostly vanilla Jekyll site reduces deploy time from 3-4 minutes down to less than 1 minute. The cached build step is reduced from ~3 minutes to ~12 seconds.
 
 ![build without cache](img/build-no-cache.png)
 
@@ -122,11 +106,12 @@ BRANCH="gh-pages"
 
 echo "Installing gems..."
 
-bundle
+bundle config path vendor/bundle
+bundle install
 
 echo "Building Jekyll site..."
 
-jekyll build
+JEKYLL_ENV=production bundle exec jekyll build
 
 echo "Publishing..."
 
