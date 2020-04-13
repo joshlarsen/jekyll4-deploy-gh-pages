@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: GitHub Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
       - name: Bundler Cache
         uses: actions/cache@v1
         with:
