@@ -17,7 +17,10 @@ Create a `main.yml` file in `./github/workflows`.
 ```yaml
 name: Jekyll Deploy
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build_and_deploy:
@@ -49,7 +52,10 @@ If you use a directory other than `_site` as the Jekyll build destination, set i
 ```yaml
 name: Jekyll Deploy
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build_and_deploy:
