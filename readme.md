@@ -75,9 +75,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: GitHub Checkout
-        uses: actions/checkout@v1
-      - name: name: Bundler Cache
-      	uses: actions/cache@v1
+        uses: actions/checkout@v2
+      - name: Bundler Cache
+        uses: actions/cache@v1
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
