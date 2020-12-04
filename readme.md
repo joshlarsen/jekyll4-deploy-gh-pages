@@ -12,7 +12,8 @@ Thanks to [Bryan Schuetz](https://github.com/BryanSchuetz) for a [working exampl
 
 ### Setup
 
-Create a `main.yml` file in `./github/workflows`.
+1. Create the nested folder `.github/workflows` at the base of your Jekyll project (don't forget the dot!)
+2. Create this `main.yml` inside that workflows folder:
 
 ```yaml
 name: Jekyll Deploy
