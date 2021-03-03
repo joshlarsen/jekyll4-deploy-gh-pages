@@ -118,7 +118,7 @@ bundle install
 
 echo "Building Jekyll site..."
 
-JEKYLL_ENV=production bundle exec jekyll build
+JEKYLL_ENV=production NODE_ENV=production bundle exec jekyll build
 
 echo "Publishing..."
 
