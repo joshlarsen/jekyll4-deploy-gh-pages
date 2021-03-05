@@ -14,7 +14,8 @@ bundle install --jobs 4 --retry 3
 
 echo "Building Jekyll site..."
 
-if [ -z $YARN_ENV ]; then
+if [ ! -z $YARN_ENV ]; then
+  echo "Installing javascript packages..."
   yarn
 fi
 
