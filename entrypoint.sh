@@ -28,6 +28,7 @@ cd ${DEST}
 git init
 git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+git pull
 git add .
 git commit -m "published by GitHub Actions"
 git push ${REPO} master:${BRANCH}
