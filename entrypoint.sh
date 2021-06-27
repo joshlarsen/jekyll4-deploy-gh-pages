@@ -11,6 +11,7 @@ BUNDLE_BUILD__SASSC=--disable-march-tune-native
 
 echo "Setting up git..."
 
+mkdir _site
 cd ${DEST}
 git init
 git config user.name "${GITHUB_ACTOR}"
