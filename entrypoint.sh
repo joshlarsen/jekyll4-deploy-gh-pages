@@ -2,25 +2,10 @@
 
 set -e
 
-
-
 DEST="${JEKYLL_DESTINATION:-_site}"
 REPO="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 BRANCH="gh-pages"
 BUNDLE_BUILD__SASSC=--disable-march-tune-native
-
-echo "Setting up git..."
-
-mkdir _site
-cd ${DEST}
-git init
-git config user.name "${GITHUB_ACTOR}"
-git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-git remote add origin "${REPO}"
-git pull origin gh-pages
-git branch --set-upstream-to=origin/gh-pages
-
-cd ..
 
 echo "Installing gems..."
 
@@ -39,6 +24,10 @@ JEKYLL_ENV=production NODE_ENV=production bundle exec jekyll build
 echo "Publishing..."
 
 cd ${DEST}
+
+git init
+git config user.name "GitHub Actions"
+git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git add .
 git commit -m "published by GitHub Actions"
-git push ${REPO} master:${BRANCH}
+git push --force ${REPO} master:${BRANCH}
