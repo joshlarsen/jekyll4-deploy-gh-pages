@@ -20,16 +20,3 @@ if [ ! -z $YARN_ENV ]; then
 fi
 
 JEKYLL_ENV=production NODE_ENV=production bundle exec jekyll build
-
-echo "Publishing..."
-
-cd ${DEST}
-
-git init
-git config user.name "${GITHUB_ACTOR}"
-git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-git checkout ${REPO} master:${BRANCH}
-git pull ${REPO} master:${BRANCH}
-git add .
-git commit -m "published by GitHub Actions"
-git push ${REPO} master:${BRANCH}
