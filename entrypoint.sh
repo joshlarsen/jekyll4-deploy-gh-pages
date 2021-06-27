@@ -18,7 +18,7 @@ git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git remote add origin "${REPO}"
 git checkout -b "gh-pages"
-git pull
+git pull origin gh-pages
 echo "Git crash?"
 git checkout "gh-pages"
 git branch --set-upstream-to=origin/gh-pages
