@@ -2,6 +2,8 @@
 
 set -e
 
+
+
 DEST="${JEKYLL_DESTINATION:-_site}"
 REPO="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 BRANCH="gh-pages"
@@ -28,8 +30,9 @@ cd ${DEST}
 git init
 git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-git checkout ${REPO} master:${BRANCH}
-git pull ${REPO} master:${BRANCH}
+
+git remote add origin "${REPO}"
+git checkout -b "gh-pages"
 git add .
 git commit -m "published by GitHub Actions"
 git push ${REPO} master:${BRANCH}
