@@ -1,4 +1,4 @@
-FROM ruby:3.1.0
+FROM ruby:3.0.3
 
 # install a modern bundler version
 RUN gem install bundler
